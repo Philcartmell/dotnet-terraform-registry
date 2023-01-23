@@ -16,7 +16,7 @@ jobs:
       with:
         dotnet-version: '6.0.x'
     - name: Install dependencies
-      run: dotnet restore DTR.sln
+      run: dotnet restore DTR.Core/DTR.Core.csproj
       working-directory: src
     - name: Build
       run: dotnet build DTR.Core/DTR.Core.csproj --configuration Release --no-restore
