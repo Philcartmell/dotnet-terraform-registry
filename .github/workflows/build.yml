@@ -1,0 +1,32 @@
+name: Dotnet terraform registry build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+    - name: Install dependencies
+      run: dotnet restore DTR.Core/DTR.Core.csproj
+      working-directory: src
+    - name: Build
+      run: dotnet build DTR.Core/DTR.Core.csproj --configuration Release --no-restore
+      working-directory: src
+    - name: Test
+      run: dotnet test DTR.Core.UnitTests/DTR.Core.Tests.Unit.csproj --no-restore --verbosity normal --logger trx --results-directory "TestResults"
+      working-directory: src
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results
+        path: TestResults
+      if: ${{ always() }}
