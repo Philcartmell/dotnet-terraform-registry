@@ -28,5 +28,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dotnet-results
-        path: TestResults
+        path: src/TestResults
       if: ${{ always() }}
