@@ -16,10 +16,10 @@ jobs:
       with:
         dotnet-version: '6.0.x'
     - name: Install dependencies
-      run: dotnet restore DTR.Core/DTR.Core.csproj
+      run: dotnet restore DTR.sln --verbosity normal
       working-directory: src
     - name: Build
-      run: dotnet build DTR.Core/DTR.Core.csproj --configuration Release --no-restore
+      run: dotnet build DTR.sln --configuration Release --no-restore
       working-directory: src
     - name: Test
       run: dotnet test DTR.Core.UnitTests/DTR.Core.Tests.Unit.csproj --no-restore --verbosity normal --logger trx --results-directory "TestResults"
